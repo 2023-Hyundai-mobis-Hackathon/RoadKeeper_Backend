@@ -5,10 +5,10 @@ class App {
         
         this.app = express();
 
-        this.middleware();
+        // this.middleware();
 
         /* body parsing */
-        this.bodyParsing();
+        // this.bodyParsing();
 
         /* router */
         this.getRouting();

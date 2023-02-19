@@ -1,16 +1,19 @@
 const dotenv = require("dotenv");
 const config = require('../config/config');
-const mysql = require('mysql2');
+const mongoose = require('mongoose');
 
 dotenv.config(); //LOAD CONFIG
 
-const connection = mysql.createConnection(config);
-
-try {
-    connection.connect();
-    console.log("[server] DB connection is sucessfull")
-} catch (e) {
-    console.error(e);
+const connectDb = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
+        console.log("[server] DB connection is sucessfull")
+    } catch (e) {
+        console.error(e);
+    }
 }
 
-module.exports = connection
+module.exports = connectDb
