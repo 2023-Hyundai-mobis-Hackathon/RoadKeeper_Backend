@@ -1,6 +1,6 @@
 /* Test APIs */
 const router = require("express").Router();
-const ctrl = require("./test.ctrl");
+const ctrl = require("./result.ctrl");
 
 /* GET */
 router.get("/", ctrl.get_root);

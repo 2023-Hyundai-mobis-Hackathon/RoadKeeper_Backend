@@ -4,6 +4,6 @@ const connectDb = require("./db");
 
 connectDb();
 
-router.use("/test", require("./test"))
+router.use("/result", require("./result"))
 
 module.exports = router;
