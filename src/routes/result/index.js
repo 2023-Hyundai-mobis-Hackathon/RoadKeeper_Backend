@@ -1,4 +1,4 @@
-/* Test APIs */
+/* Result APIs */
 const router = require("express").Router();
 const ctrl = require("./result.ctrl");
 
