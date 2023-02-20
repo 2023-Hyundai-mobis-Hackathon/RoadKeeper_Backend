@@ -6,19 +6,22 @@ const DangerSchema = new Schema(
 {
     category: {
         type: String,
-        required: true,
-        trim: true
     },
     location: {
         type: String,
-        required: true,
-        trim: true
     },
     accuracy: {
         type: Number,
-        required: true,
-        trim: true
     },
+    user_id: {
+        type: Types.ObjectId,
+    },
+    quick: {
+        type: Boolean,
+    },
+    complete: {
+        type: Boolean,
+    }
 },
 )
 
