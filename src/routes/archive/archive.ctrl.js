@@ -9,7 +9,7 @@ const { Schema, Types } = mongoose;
 exports.get_road = async (req,res) => {
     try {
         const roads = await road.find();
-        res.send({ data: {"road_name": roads.road_name, "danger_percent": roads.danger_percent} });
+        res.send({ data: {"road_name": roads.road_name, "road_score": roads.road_score} });
     } catch (err) {
         console.log(err);
         res.send("error");

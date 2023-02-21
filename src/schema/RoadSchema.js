@@ -7,7 +7,7 @@ const RoadSchema = new Schema(
     road_name: {
         type: String,
     },
-    danger_number: {
+    danger_num: {
         type: Number
     },
     garbage_num: {

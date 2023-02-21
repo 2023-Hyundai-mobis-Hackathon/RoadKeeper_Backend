@@ -33,7 +33,7 @@ exports.get_road = async (req,res) => {
 exports.get_pbv = async (req,res) => {
     try {
         const pbvs = await pbv.find();
-        res.send({ data: {"category": pbvs.category,"status": pbvs.status, "location": pbvs.location } });
+        res.send({ data: {"category": pbvs.category, "status": pbvs.status, "location": pbvs.location } });
     } catch (err) {
         console.log(err);
         res.send("error");

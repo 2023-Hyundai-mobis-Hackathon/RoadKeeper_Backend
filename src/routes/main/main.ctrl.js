@@ -18,7 +18,6 @@ exports.get_report = async (req,res) => {
         const dangers_complete = await danger.find({ complete: true });
         var complete_num = dangers_complete.length;
 
-
         res.send({ data: { "entire_num": entire_num, "quick_num": quick_num, "complete_num": complete_num } });
     } catch (err) {
         console.log(err);

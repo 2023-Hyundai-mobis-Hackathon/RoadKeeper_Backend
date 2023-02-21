@@ -22,7 +22,7 @@ const DangerSchema = new Schema(
     complete: {
         type: Boolean,
     },
-    score: {
+    danger_score: {
         type: Number
     }
 },
