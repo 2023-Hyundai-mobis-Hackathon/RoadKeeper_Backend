@@ -200,3 +200,7 @@ def inference(
     result_json = json.dumps(results)
 
     return result_json
+
+
+result_json = inference()
+print(result_json)
