@@ -4,9 +4,6 @@ const { Schema, Types } = mongoose;
 
 const PBVSchema = new Schema(
 {
-    category: {
-        type: String,
-    },
     status: {
         type: Number
     },
