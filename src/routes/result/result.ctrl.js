@@ -1,6 +1,5 @@
 /* Result API file */
 const danger = require("../../schema/DangerSchema.js");
-const user = require("../../schema/UserSchema.js")
 const { Router } = require("express");
 const router = Router();
 

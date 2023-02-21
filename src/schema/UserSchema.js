@@ -4,6 +4,12 @@ const { Schema, Types } = mongoose;
 
 const UserSchema = new Schema(
 {
+    user_name: {
+        type: String
+    },
+    mileage: {
+        type: Number
+    },
     danger_num: {
         type: Number,
     },
@@ -14,6 +20,9 @@ const UserSchema = new Schema(
         type: Number,
     },
     animal_num: {
+        type: Number
+    },
+    user_score: {
         type: Number
     }
 },

@@ -18,6 +18,12 @@ const RoadSchema = new Schema(
     },
     animal_num: {
         type: Number
+    },
+    complete_num: {
+        type: Number
+    },
+    road_score: {
+        type: Number
     }
 },
 )

@@ -21,6 +21,9 @@ const DangerSchema = new Schema(
     },
     complete: {
         type: Boolean,
+    },
+    score: {
+        type: Number
     }
 },
 )
