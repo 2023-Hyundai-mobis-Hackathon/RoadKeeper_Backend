@@ -6,7 +6,7 @@ const road = require("../../schema/RoadSchema.js");
 const { Router } = require("express");
 const router = Router();
 
-const PythonShell = require('python-shell');
+var PythonShell = require('python-shell');
 
 const mongoose = require('mongoose');
 const { Schema, Types } = mongoose;
@@ -36,12 +36,15 @@ exports.get_user_dangers = async (req,res) => {
 
 exports.post_model = async (req,res) => {
     try {
+        console.log("test")
         // run model
         await PythonShell.PythonShell.run('yolov5/inference.py', function(err, res) {
             if (err) throw err;
             console.log(res);
             console.log("finished")
         });
+
+        console.log("test2")
 
         const model_danger_num = 1;
         const model_garbage_num = 1;

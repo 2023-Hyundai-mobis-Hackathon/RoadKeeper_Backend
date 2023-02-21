@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 
 class App {
     constructor() {
@@ -8,7 +9,9 @@ class App {
         // this.middleware();
 
         /* body parsing */
-        // this.bodyParsing();
+        this.bodyParsing();
+        
+        this.cors();
 
         /* router */
         this.getRouting();
@@ -22,6 +25,14 @@ class App {
 
     middleware() {
         /* Add your middleware */
+    }
+
+    cors() {
+        const corsOptions = ({
+            origin: "http://ec2-18-183-5-142.ap-northeast-1.compute.amazonaws.com:3000/",
+            credentials: true,
+        });
+        this.app.use(cors(corsOptions));
     }
     
     bodyParsing() {
