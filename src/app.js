@@ -29,7 +29,7 @@ class App {
 
     cors() {
         const corsOptions = ({
-            origin: "http://ec2-18-183-5-142.ap-northeast-1.compute.amazonaws.com:3000/",
+            origin: "*",
             credentials: true,
         });
         this.app.use(cors(corsOptions));
