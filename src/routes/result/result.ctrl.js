@@ -7,6 +7,7 @@ const { Router } = require("express");
 const router = Router();
 
 var PythonShell = require('python-shell');
+const path = require("path");
 
 const mongoose = require('mongoose');
 const { Schema, Types } = mongoose;
@@ -36,13 +37,60 @@ exports.get_user_dangers = async (req,res) => {
 
 exports.post_model = async (req,res) => {
     try {
-        console.log("test")
         // run model
-        await PythonShell.PythonShell.run('yolov5/inference.py', function(err, res) {
-            if (err) throw err;
-            console.log(res);
-            console.log("finished")
-        });
+
+        // const exec = require('child_process').exec;
+
+        // const result = exec('python', ['yolov5/inference.py']);
+        // // const result = spawn('python', ['./src/routes/result/test.py']);
+
+        // result.stdout.on('data', function(data) {
+        //     console.log(data.toString());
+        // });
+
+        // result.stderr.on('data', function(data) {
+        //     console.log(data.toString());
+        // });
+
+        const runModel = async () => {
+            console.log("Test1")
+            const options = {
+                mode: 'text',
+                pythonOptions: ['-u'],
+                // scriptPath: 'yolov5',
+            };
+            console.log("Test2")
+            // wrap it in a promise, and `await` the result
+            const result = await new Promise((resolve, reject) => {
+                console.log("Test3")
+                // PythonShell.PythonShell.run('inference.py', options, (err, results) => {
+                    PythonShell.PythonShell.run('./src/routes/result/test.py', options, (err, results) => {
+                    console.log("Test4")
+                    if (err) return reject(err);
+                    return resolve(results);
+                });
+            });
+            console.log("Test4")
+            console.log(result.stdout);
+            return result;
+        };
+        console.log("Test5")
+
+        runModel();
+        console.log("Test6")
+        // const options = {
+        //     mode: 'text',
+        //     pythonPath: '',
+        //     pythonOptions: ['-u'],
+        //     scriptPath: 'yolov5',
+        // }
+
+        // await PythonShell.PythonShell.run('inference.py', options, async (err, result) => {
+        //     if (err) throw err;
+        //     console.log(result);
+        //     console.log("finished");
+        //     res.send({data: result});
+        // });
 
         console.log("test2")
 
