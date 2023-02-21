@@ -203,4 +203,4 @@ def inference(
 
 
 result_json = inference()
-print(result_json)
+print(result_json, end='')
