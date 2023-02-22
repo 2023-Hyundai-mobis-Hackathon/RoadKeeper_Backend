@@ -63,8 +63,41 @@ exports.post_model = async (req,res) => {
         const model_pothole_num = data.pothole_num;
         const model_animal_num = data.animal_num;
 
-        // user update
-        const users = await user.updateMany({
+        // danger insert // score 돌리기 완료
+        const danger_list = data.hazards;
+        for(var i=0; i<danger_list.length; ++i){
+            var danger_score = 0;
+            var quick = false;
+            var category = danger_list[i].category;
+            var accuracy = danger_list[i].accuracy;
+            const result = spawn('python', ['src/routes/result/src/danger_priority_score.py', danger_list[i].category]);
+
+            result.stdout.on('data', function(data) {
+                console.log(parseInt(data));
+                danger_score = parseInt(data)
+                if (danger_score >= 75) quick = true;
+                else quick = false;
+
+                const new_danger = danger.create({
+                    category: category,
+                    accuracy: accuracy,
+                    location: req.body.location,
+                    user_id: req.body.user_id,
+                    quick: quick,
+                    complete: false,
+                    danger_score: danger_score 
+                })
+                console.log("new_danger: " + new_danger)
+            });
+    
+            result.stderr.on('data', function(data) {
+                console.log(data.toString());
+            });
+
+        }
+
+        // user update // score 돌리기
+        const user = await user.updateOne({
             _id: Types.ObjectId(req.body.user_id)
         }, { "$inc": {
             danger_num: model_danger_num,
@@ -73,8 +106,31 @@ exports.post_model = async (req,res) => {
             animal_num: model_animal_num
         }})
 
-        // road update
-        const roads = await road.updateMany({
+        const user_danger_num = user.danger_num
+        const user_quick_num  = (await danger.find({user_id: Types.ObjectId(req.body.user_id), quick: true})).length // report num
+        const user_complete_num = (await danger.find({user_id: Types.ObjectId(req.body.user_id), quick: true, complete: true})).length // report_actioned_num
+
+        //  run score python
+        const user_result = spawn('python', ['src/routes/result/src/user_score.py', user_danger_num, user_quick_num, user_complete_num]);
+
+        user_result.stdout.on('data', function(data) {
+            console.log(parseInt(data));
+            var user_score = parseInt(data)
+
+            const user = user.update({
+                _id: Types.ObjectId(req.body.user_id)
+            }, {
+                user_score: user_score
+            })
+            console.log("update_user: " + user)
+        });
+
+        user_result.stderr.on('data', function(data) {
+            console.log(data.toString());
+        });
+
+        // road update // score 돌리기
+        const road = await road.update({
             _id: Types.ObjectId(req.body.road_id)
         }, { "$inc": {
             danger_num: model_danger_num,
@@ -83,19 +139,30 @@ exports.post_model = async (req,res) => {
             animal_num: model_animal_num
         }})
 
-        // danger insert 만들기
-        const danger_list = data.hazards;
-        for(var i=0; i<danger_list.length; ++i){
-            await danger.create({
-                category: danger_list[i].category,
-                accuracy: danger_list[i].accuracy,
-                location: req.body.location,
-                user_id: req.body.user_id,
-                quick: false, // 나중에 계산 식 추가
-                complete: false,
-                danger_score: 50 // 나중에 계산 식 추가
+        const road_danger_num = road.danger_num
+        const road_garbage_num  = road.garbage_num
+        const road_pothole_num = road.pothole_num
+        const road_animal_num = road.animal_num
+        const road_complete_num = road.complete_num
+
+        const road_result = spawn('python', ['src/routes/result/src/road_score.py', road_garbage_num, road_pothole_num, road_animal_num, road_danger_num, road_complete_num]);
+
+        road_result.stdout.on('data', function(data) {
+            console.log(parseInt(data));
+            var road_score = parseInt(data)
+
+            const road = road.update({
+                _id: Types.ObjectId(req.body.road_id)
+            }, {
+                road_score: road_score
             })
-        }
+            console.log("update_road: " + road)
+        });
+
+        road_result.stderr.on('data', function(data) {
+            console.log(data.toString());
+        });
+
 
         res.send({ data: "success" });
     } catch (err) {

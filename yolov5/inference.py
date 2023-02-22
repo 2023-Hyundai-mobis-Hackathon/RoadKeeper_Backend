@@ -201,6 +201,5 @@ def inference(
 
     return result_json
 
-
 result_json = inference()
 print(result_json, end='')
