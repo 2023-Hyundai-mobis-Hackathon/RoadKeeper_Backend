@@ -5,9 +5,12 @@ def road_score(garbage_num, pothole_num, animal_num, report_num, report_actioned
     # report_num = 도로에서 누적된 신고횟수
     # report_actioned_num = 조치된 위해 요소 갯수
     road_score = 0
-    report_num = report_num
-    report_actioned_num = report_actioned_num
-    total = garbage_num + pothole_num+animal_num
+    report_num = int(report_num)
+    report_actioned_num = int(report_actioned_num)
+    garbage_num = int(garbage_num)
+    pothole_num = int(pothole_num)
+    animal_num = int(animal_num)
+    total = int(garbage_num) + int(pothole_num) + int(animal_num)
 
     garbage_score = float(0.8*garbage_num) - float(0.85*report_actioned_num*(garbage_num/total))
     pothole_score = float(0.9*pothole_num) - float(0.85*report_actioned_num*(pothole_num/total))
