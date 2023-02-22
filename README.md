@@ -55,6 +55,20 @@ YOLOv5 기반 객체 인식 및 분류 기능를 통한 도로 위험물 신고,
 
 <br>
 
+<!-- ## Database Schema
+
+|Danger||
+|:---:|:---:|
+|_id|Object Id|
+|user_id|Object Id|
+|category|String|
+|location|String|
+|accuracy|Number|
+|quick|Boolean|
+|complete|Boolean|
+|danger_score|Number| -->
+
+
 ## 개발 환경
 ### Software requirement
 - Visual Code + node
