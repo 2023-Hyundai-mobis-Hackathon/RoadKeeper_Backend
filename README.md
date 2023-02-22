@@ -29,6 +29,7 @@ YOLOv5 기반 객체 인식 및 분류 기능를 통한 도로 위험물 신고,
   ├──  package-lock.json
   ├──  package.json
   ├──  README.md
+  ├──  yolov5
   ├──  src
   │   ├──  app.js
   │   ├──  config
